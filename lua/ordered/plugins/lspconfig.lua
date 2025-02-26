@@ -155,17 +155,17 @@ return {
                   'kickstart-lsp-highlight',
                   { clear = false }
                )
-               vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
-                  buffer = event.buf,
-                  group = highlight_augroup,
-                  callback = vim.lsp.buf.document_highlight,
-               })
-
-               vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
-                  buffer = event.buf,
-                  group = highlight_augroup,
-                  callback = vim.lsp.buf.clear_references,
-               })
+               -- vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
+               --    buffer = event.buf,
+               --    group = highlight_augroup,
+               --    callback = vim.lsp.buf.document_highlight,
+               -- })
+               --
+               -- vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
+               --    buffer = event.buf,
+               --    group = highlight_augroup,
+               --    callback = vim.lsp.buf.clear_references,
+               -- })
 
                vim.api.nvim_create_autocmd('LspDetach', {
                   group = vim.api.nvim_create_augroup(

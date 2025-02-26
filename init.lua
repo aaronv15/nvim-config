@@ -76,20 +76,33 @@ vim.opt.shiftwidth = 3
 vim.opt.softtabstop = 3
 vim.opt.expandtab = true
 
+-- folding
+vim.opt.foldmethod = 'expr'
+vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+vim.opt.foldcolumn = '0'
+vim.opt.foldtext = ''
+vim.opt.foldlevel = 99
+vim.opt.foldnestmax = 3
+
 -- My keymaps
-vim.keymap.set('n', '<leader>pv', vim.cmd.Ex, { desc = ':Ex' })
-vim.keymap.set('n', '<leader>cp', '"+p', { desc = 'Paste from system clipboard' })
-vim.keymap.set('n', '<leader>cy', '"+y', { desc = 'Copy to system clipboard' })
-vim.keymap.set('n', '<leader>t1', '1gt', { desc = 'Goto Tab 1' })
-vim.keymap.set('n', '<leader>t2', '2gt', { desc = 'Goto Tab 2' })
-vim.keymap.set('n', '<leader>t3', '3gt', { desc = 'Goto Tab 3' })
-vim.keymap.set('n', '<leader>t4', '4gt', { desc = 'Goto Tab 4' })
-vim.keymap.set('n', '<leader>t5', '5gt', { desc = 'Goto Tab 5' })
-vim.keymap.set('n', '<leader>t6', '6gt', { desc = 'Goto Tab 6' })
-vim.keymap.set('n', '<leader>t7', '7gt', { desc = 'Goto Tab 7' })
-vim.keymap.set('n', '<leader>t8', '8gt', { desc = 'Goto Tab 8' })
-vim.keymap.set('n', '<leader>t9', '9gt', { desc = 'Goto Tab 9' })
-vim.keymap.set('n', '<leader>t0', ':tablast<cr>', { desc = 'Goto last tab' })
+vim.keymap.set('n', '<leader>pv', vim.cmd.Oil, { desc = ':Ex' })
+vim.keymap.set(
+   { 'n', 'v' },
+   '<leader>cp',
+   '"+p',
+   { desc = 'Paste from system clipboard' }
+)
+vim.keymap.set({ 'n', 'v' }, '<leader>cy', '"+y', { desc = 'Copy to system clipboard' })
+vim.keymap.set('n', '<leader>1', '1gt', { desc = 'Goto Tab 1' })
+vim.keymap.set('n', '<leader>2', '2gt', { desc = 'Goto Tab 2' })
+vim.keymap.set('n', '<leader>3', '3gt', { desc = 'Goto Tab 3' })
+vim.keymap.set('n', '<leader>4', '4gt', { desc = 'Goto Tab 4' })
+vim.keymap.set('n', '<leader>5', '5gt', { desc = 'Goto Tab 5' })
+vim.keymap.set('n', '<leader>6', '6gt', { desc = 'Goto Tab 6' })
+vim.keymap.set('n', '<leader>7', '7gt', { desc = 'Goto Tab 7' })
+vim.keymap.set('n', '<leader>8', '8gt', { desc = 'Goto Tab 8' })
+vim.keymap.set('n', '<leader>9', '9gt', { desc = 'Goto Tab 9' })
+vim.keymap.set('n', '<leader>0', ':tablast<cr>', { desc = 'Goto last tab' })
 
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
@@ -188,13 +201,14 @@ require('lazy').setup({
    require 'ordered.plugins.whichkey',
    require 'ordered.plugins.telescope',
    require 'ordered.plugins.lazydev',
-   require 'ordered.plugins.lspconifg',
+   require 'ordered.plugins.lspconfig',
    require 'ordered.plugins.autoformat',
    require 'ordered.plugins.autocomplete',
    require 'ordered.plugins.colourscheme',
    require 'ordered.plugins.htodo',
    require 'ordered.plugins.other',
    require 'ordered.plugins.treesitter',
+   require 'ordered.plugins.oil',
 
    -- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
    -- init.lua. If you want these files, they are in the repository, so you can just download them and
