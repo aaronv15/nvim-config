@@ -7,6 +7,7 @@ return { -- Highlight, edit, and navigate code
       ensure_installed = {
          'bash',
          'c',
+         'zig',
          'python',
          'diff',
          'html',

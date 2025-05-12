@@ -257,6 +257,7 @@ return {
          clangd = {},
          basedpyright = {},
          jdtls = {},
+         zls = {},
 
          -- gopls = {},
          -- rust_analyzer = {},
