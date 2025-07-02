@@ -12,6 +12,7 @@ return {
          topdelete = { text = '‾' },
          changedelete = { text = '~' },
       },
+      --[[
       on_attach = function(bufnr)
          local gitsigns = require 'gitsigns'
 
@@ -77,5 +78,6 @@ return {
             { desc = '[T]oggle git show [D]eleted' }
          )
       end,
+      ]]
    },
 }
