@@ -1,5 +1,6 @@
-return { -- Collection of various small independent plugins/modules
-   'echasnovski/mini.nvim',
+return {
+   'nvim-mini/mini.nvim',
+   version = false,
    config = function()
       -- Better Around/Inside textobjects
       --
@@ -7,7 +8,7 @@ return { -- Collection of various small independent plugins/modules
       --  - va)  - [V]isually select [A]round [)]paren
       --  - yinq - [Y]ank [I]nside [N]ext [Q]uote
       --  - ci'  - [C]hange [I]nside [']quote
-      require('mini.ai').setup { n_lines = 500 }
+      require('mini.ai').setup()
 
       -- Add/delete/replace surroundings (brackets, quotes, etc.)
       --
@@ -16,22 +17,55 @@ return { -- Collection of various small independent plugins/modules
       -- - sr)'  - [S]urround [R]eplace [)] [']
       require('mini.surround').setup()
 
-      -- Simple and easy statusline.
-      --  You could remove this setup call if you don't like it,
-      --  and try some other statusline plugin
-      local statusline = require 'mini.statusline'
-      -- set use_icons to true if you have a Nerd Font
-      statusline.setup { use_icons = vim.g.have_nerd_font }
+      require('mini.pairs').setup()
 
-      -- You can configure sections in the statusline by overriding their
-      -- default behavior. For example, here we set the section for
-      -- cursor location to LINE:COLUMN
-      ---@diagnostic disable-next-line: duplicate-set-field
-      statusline.section_location = function()
-         return '%2l:%-2v'
-      end
+      local miniclue = require 'mini.clue'
+      miniclue.setup {
+         triggers = {
+            -- Leader triggers
+            { mode = 'n', keys = '<Leader>' },
+            { mode = 'x', keys = '<Leader>' },
 
-      -- ... and there is more!
-      --  Check out: https://github.com/echasnovski/mini.nvim
+            -- Built-in completion
+            { mode = 'i', keys = '<C-x>' },
+
+            -- `g` key
+            { mode = 'n', keys = 'g' },
+            { mode = 'x', keys = 'g' },
+
+            -- Marks
+            { mode = 'n', keys = "'" },
+            { mode = 'n', keys = '`' },
+            { mode = 'x', keys = "'" },
+            { mode = 'x', keys = '`' },
+
+            -- Registers
+            { mode = 'n', keys = '"' },
+            { mode = 'x', keys = '"' },
+            { mode = 'i', keys = '<C-r>' },
+            { mode = 'c', keys = '<C-r>' },
+
+            -- Window commands
+            { mode = 'n', keys = '<C-w>' },
+
+            -- `z` key
+            { mode = 'n', keys = 'z' },
+            { mode = 'x', keys = 'z' },
+
+            -- '[]'
+            { mode = 'n', keys = '[' },
+            { mode = 'n', keys = ']' },
+         },
+
+         clues = {
+            -- Enhance this by adding descriptions for <Leader> mapping groups
+            miniclue.gen_clues.builtin_completion(),
+            miniclue.gen_clues.g(),
+            miniclue.gen_clues.marks(),
+            miniclue.gen_clues.registers(),
+            miniclue.gen_clues.windows(),
+            miniclue.gen_clues.z(),
+         },
+      }
    end,
 }
