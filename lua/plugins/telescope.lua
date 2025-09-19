@@ -34,6 +34,12 @@ return {
          builtin.diagnostics { bufnr = 0 }
       end, 'Telescope [S]earch [D]iagnostics')
 
+      map('<leader>sr', builtin.lsp_references, 'Telescope [S]earch [R]eferences')
+
+      -- These I believe are now builtin as gd, and gD respectively
+      -- map('<leader>gd', builtin.lsp_definitions, '[G]oto [D]efinition')
+      -- map('<leader>gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+
       -- map('<leader>sk', builtin.keymaps, '[S]earch [K]eymaps')
       -- map('<leader>ss', builtin.builtin, '[S]earch [S]elect Telescope')
       -- map('<leader>sd', builtin.diagnostics, '[S]earch [D]iagnostics')

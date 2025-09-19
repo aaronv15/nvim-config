@@ -25,7 +25,10 @@ return {
       -- C-k: Toggle signature help (if signature.enabled = true)
       --
       -- See :h blink-cmp-config-keymap for defining your own keymap
-      keymap = { preset = 'default' },
+      keymap = {
+         preset = 'default',
+         ['<tab>'] = { 'accept', 'fallback' },
+      },
 
       appearance = {
          -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
@@ -34,7 +37,39 @@ return {
       },
 
       -- (Default) Only show the documentation popup when manually triggered
-      completion = { documentation = { auto_show = true } },
+      completion = {
+         ghost_text = { enabled = true },
+         documentation = { auto_show = true },
+         trigger = {
+            -- When true, will prefetch the completion items when entering insert mode
+            prefetch_on_insert = false,
+            -- When false, will not show the completion window automatically when in a snippet
+            show_in_snippet = false,
+
+            -- When true, will show the completion window after accepting a completion and then backspacing into a keyword
+            -- show_on_backspace_after_accept = true,
+
+            -- When true, will show the completion window after entering insert mode and backspacing into keyword
+            show_on_backspace_after_insert_enter = false,
+
+            -- When true, will show the completion window after typing any of alphanumerics, `-` or `_`
+            show_on_keyword = false,
+
+            -- When true, will show the completion window after typing a trigger character
+            show_on_trigger_character = false,
+
+            -- When both this and show_on_trigger_character are true, will show the completion window
+            -- when the cursor comes after a trigger character after accepting an item
+            show_on_accept_on_trigger_character = false,
+
+            -- When both this and show_on_trigger_character are true, will show the completion window
+            -- when the cursor comes after a trigger character when entering insert mode
+            show_on_insert_on_trigger_character = false,
+         },
+      },
+
+      -- Experimental signature help
+      signature = { enabled = true },
 
       -- Default list of enabled providers defined so that you can extend it
       -- elsewhere in your config, without redefining it, due to `opts_extend`

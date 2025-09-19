@@ -66,6 +66,9 @@ vim.opt.foldnestmax = 3
 vim.o.sessionoptions =
    'blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions'
 
+-- set winborder
+vim.o.winborder = 'rounded'
+
 -- My keymaps
 vim.keymap.set(
    'n',
@@ -94,7 +97,7 @@ vim.keymap.set('n', '<leader>6', '6gt', { desc = 'Goto Tab [6]' })
 vim.keymap.set('n', '<leader>7', '7gt', { desc = 'Goto Tab [7]' })
 vim.keymap.set('n', '<leader>8', '8gt', { desc = 'Goto Tab [8]' })
 vim.keymap.set('n', '<leader>9', '9gt', { desc = 'Goto Tab [9]' })
-vim.keymap.set('n', '<leader>0', ':tablast<cr>', { desc = 'Goto last tab' })
+vim.keymap.set('n', '<leader>0', '<cmd>tablast<CR>', { desc = 'Goto last tab' })
 
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
@@ -136,8 +139,29 @@ vim.api.nvim_create_autocmd('TextYankPost', {
    desc = 'Highlight when yanking (copying) text',
    group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
    callback = function()
-      vim.highlight.on_yank()
+      vim.hl.on_yank()
    end,
+})
+
+-- Enable spellchecking
+vim.api.nvim_create_user_command(
+   'Spell',
+   'set spell spelllang=en_us',
+   { desc = 'set spellcheck on', force = false }
+)
+vim.api.nvim_create_user_command(
+   'Spellnt',
+   'set spell!',
+   { desc = 'set spellcheck off', force = false }
+)
+
+-- Open new tab and search for a file
+vim.api.nvim_create_user_command('Ntab', function()
+   vim.cmd 'tabnew'
+   vim.cmd 'Telescope find_files'
+end, {
+   desc = 'create a new tab, and then open the Telescope find_files picker',
+   force = false,
 })
 
 -- Set various configs
@@ -187,5 +211,24 @@ require('lazy').setup {
    -- automatically check for plugin updates
    -- checker = { enabled = true },
 }
+
+-- Disable some messages
+
+-- Disable the deprecated telescope 'goto definition'
+-- Silence the specific position encoding message
+local notify_original = vim.notify
+vim.notify = function(msg, ...)
+   if
+      msg
+      and (
+         msg:match 'position_encoding param is required'
+         or msg:match 'Defaulting to position encoding of the first client'
+         or msg:match 'multiple different client offset_encodings'
+      )
+   then
+      return
+   end
+   return notify_original(msg, ...)
+end
 
 -- vim: ts=2 sts=2 sw=2 et
