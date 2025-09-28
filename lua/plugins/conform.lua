@@ -13,10 +13,13 @@ return {
    opts = {
       formatters_by_ft = {
          lua = { 'stylua' },
-         go = { 'goimports', 'gofmt' },
+         -- go = { 'gofmt' },
          -- You can also customize some of the format options for the filetype
          -- You can use a function here to determine the formatters dynamically
          python = { 'ruff_format' },
+         java = { 'clang-format' },
+         c = { 'clang-format' },
+         cpp = { 'clang-format' },
 
          css = { 'prettierd' },
          json = { 'prettierd' },
