@@ -70,24 +70,15 @@ vim.o.sessionoptions =
 vim.o.winborder = 'rounded'
 
 -- My keymaps
-vim.keymap.set(
-   'n',
-   '<leader>pv',
-   vim.cmd.Oil,
-   { desc = ':Ex (But for oil, so vim.cmd.Oil)' }
-)
-vim.keymap.set(
-   { 'n', 'v' },
-   '<leader>cp',
-   '"+p',
-   { desc = '[P]aste from system [C]lipboard' }
-)
-vim.keymap.set(
-   { 'n', 'v' },
-   '<leader>cy',
-   '"+y',
-   { desc = '[Y]ank to system [C]lipboard' }
-)
+local map_opts_oil = { desc = ':Ex (But for oil, so vim.cmd.Oil)' }
+local map_opts_paste = { desc = '[P]aste from system [C]lipboard' }
+local map_opts_yank = { desc = '[Y]ank to system [C]lipboard' }
+
+vim.keymap.set('n', '<leader>v', vim.cmd.Oil, map_opts_oil)
+vim.keymap.set({ 'n', 'v' }, '<leader>cp', '"+p', map_opts_paste)
+vim.keymap.set({ 'n', 'v' }, '<leader>cP', '"+P', map_opts_paste)
+vim.keymap.set({ 'n', 'v' }, '<leader>cy', '"+y', map_opts_yank)
+vim.keymap.set({ 'n', 'v' }, '<leader>cY', '"+y$', map_opts_yank)
 vim.keymap.set('n', '<leader>1', '1gt', { desc = 'Goto Tab [1]' })
 vim.keymap.set('n', '<leader>2', '2gt', { desc = 'Goto Tab [2]' })
 vim.keymap.set('n', '<leader>3', '3gt', { desc = 'Goto Tab [3]' })

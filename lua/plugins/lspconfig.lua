@@ -7,7 +7,15 @@ return {
    },
    config = function()
       local ensure_installed = {
-         ['basedpyright'] = {},
+         ['basedpyright'] = {
+            settings = {
+               basedpyright = {
+                  analysis = {
+                     diagnosticMode = 'workspace',
+                  },
+               },
+            },
+         },
          -- ['ty'] = {},
          ['lua_ls'] = {},
          ['gopls'] = {},
@@ -15,6 +23,20 @@ return {
          ['zls'] = {},
          ['clangd'] = {},
       }
+
+      -- check number of values in a table
+      local table_is_empty = function(t)
+         for _ in pairs(t) do
+            return false
+         end
+         return true
+      end
+
+      for key, value in pairs(ensure_installed) do
+         if not table_is_empty(value) then
+            vim.lsp.config(key, value)
+         end
+      end
 
       for key, _ in pairs(ensure_installed) do
          vim.lsp.enable(key)
