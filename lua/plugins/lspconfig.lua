@@ -6,55 +6,49 @@ return {
       { 'WhoIsSethDaniel/mason-tool-installer.nvim' },
    },
    config = function()
-      local lsp_configs = {
-         ['basedpyright'] = {
-            settings = {
-               basedpyright = {
-                  analysis = {
-                     diagnosticMode = 'workspace',
-                  },
+      -- I wrote this. For future reference
+      ---@type {type: "'lsp'" | "'fmt'", name: string, mason_name: string?, config: table?}[]
+      local tool_configs = {
+         -- { type = 'lsp', name = 'ty' },
+         {
+            type = 'lsp',
+            name = 'basedpyright',
+            config = {
+               settings = {
+                  basedpyright = { analysis = { diagnosticMode = 'workspace' } },
                },
             },
          },
-         -- ['ty'] = {},
-         ['lua-language-server'] = {},
-         ['gopls'] = {},
-         ['jdtls'] = {},
-         ['zls'] = {},
-         ['clangd'] = {},
+         { type = 'lsp', name = 'lua_ls', mason_name = 'lua-language-server' },
+         { type = 'lsp', name = 'gopls' },
+         { type = 'lsp', name = 'jdtls' },
+         { type = 'lsp', name = 'zls' },
+         { type = 'lsp', name = 'clangd' },
+         { type = 'fmt', name = 'stylua' },
+         { type = 'fmt', name = 'clang-format' },
+         { type = 'fmt', name = 'ruff' },
+         { type = 'fmt', name = 'golangci-lint' },
+         { type = 'fmt', name = 'codespell' },
+         { type = 'fmt', name = 'prettierd' },
       }
 
-      local ensure_installed = {
-         'stylua', -- Lua
-         'clang-format', -- C
-         'ruff', -- Python
-         'golangci-lint', -- Go
-         'codespell', -- All
-         'prettierd',
-      }
-
-      for key, _ in pairs(lsp_configs) do
-         table.insert(ensure_installed, key)
+      local ensure_installed = {}
+      for _, val in ipairs(tool_configs) do
+         table.insert(ensure_installed, val.mason_name or val.name)
       end
 
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
       -- check number of values in a table
-      local table_is_empty = function(t)
-         for _ in pairs(t) do
-            return false
-         end
-         return true
-      end
-
-      for key, value in pairs(lsp_configs) do
-         if not table_is_empty(value) then
-            vim.lsp.config(key, value)
+      --
+      for _, val in ipairs(tool_configs) do
+         if val.config then
+            vim.lsp.config(val.name, val)
          end
       end
 
-      for key, _ in pairs(lsp_configs) do
-         vim.lsp.enable(key)
+      for _, val in ipairs(tool_configs) do
+         vim.lsp.enable(val.name)
       end
 
       vim.diagnostic.config {
