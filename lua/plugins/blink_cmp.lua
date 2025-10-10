@@ -28,6 +28,7 @@ return {
       keymap = {
          preset = 'default',
          ['<tab>'] = { 'accept', 'fallback' },
+         ['<C-d>'] = { 'show_signature', 'hide_signature', 'fallback' },
          ['<C-k>'] = { 'scroll_documentation_up', 'fallback' },
          ['<C-j>'] = { 'scroll_documentation_down', 'fallback' },
       },
@@ -40,11 +41,11 @@ return {
 
       -- (Default) Only show the documentation popup when manually triggered
       completion = {
-         ghost_text = { enabled = true },
+         ghost_text = { enabled = false },
          documentation = { auto_show = true },
          trigger = {
             -- When true, will prefetch the completion items when entering insert mode
-            prefetch_on_insert = true,
+            prefetch_on_insert = false,
 
             -- When false, will not show the completion window automatically when in a snippet
             show_in_snippet = false,

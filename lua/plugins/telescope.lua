@@ -23,12 +23,12 @@ return {
       end
 
       local builtin = require 'telescope.builtin'
-      map('<leader>sf', builtin.find_files, 'Telescope [S]earch [F]iles')
-      map('<leader>sg', builtin.live_grep, 'Telescope [S]earch by [G]rep')
-      map('<leader>sb', builtin.buffers, 'Telescope [S]earch [B]uffers')
-      map('<leader>sh', builtin.help_tags, 'Telescope [S]earch [H]elp')
-      map('<leader>sw', builtin.grep_string, 'Telescope [S]earch current [W]ord')
-      map('<leader>sc', builtin.colorscheme, 'Telescope [S]earch [C]olorscheme')
+      map('<leader>sf', builtin.find_files, '[S]earch [F]iles')
+      map('<leader>sg', builtin.live_grep, '[S]earch by [G]rep')
+      map('<leader>sb', builtin.buffers, '[S]earch [B]uffers')
+      map('<leader>sh', builtin.help_tags, '[S]earch [H]elp')
+      map('<leader>sw', builtin.grep_string, '[S]earch current [W]ord')
+      map('<leader>sc', builtin.colorscheme, '[S]earch [C]olorscheme')
       -- This hooks in to the nvim lsp. 'bufnr' specifies that it is only searching the current buffer
       map('<leader>sd', function()
          builtin.diagnostics { bufnr = 0 }
@@ -37,8 +37,9 @@ return {
       map('<leader>sr', builtin.lsp_references, 'Telescope [S]earch [R]eferences')
 
       -- These I believe are now builtin as gd, and gD respectively
-      -- map('<leader>gd', builtin.lsp_definitions, '[G]oto [D]efinition')
-      -- map('<leader>gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+      -- Adding to this later: They are not. I think they are in-file only
+      map('<leader>gd', builtin.lsp_definitions, '[G]oto [D]efinition')
+      map('<leader>gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 
       -- map('<leader>sk', builtin.keymaps, '[S]earch [K]eymaps')
       -- map('<leader>ss', builtin.builtin, '[S]earch [S]elect Telescope')
