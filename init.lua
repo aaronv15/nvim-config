@@ -1,3 +1,6 @@
+-- Set to disable lsp's
+-- vim.g.lsp_disabled
+
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 vim.g.have_nerd_font = true
@@ -28,6 +31,7 @@ vim.opt.splitbelow = true
 
 vim.opt.list = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+vim.opt.fillchars = { fold = '-', foldopen = 'v', foldsep = '|', foldclose = '>' }
 
 -- Preview substitutions live, as you type!
 vim.opt.inccommand = 'split'
@@ -53,18 +57,15 @@ vim.opt.expandtab = true
 
 -- folding
 -- Treesitter based folding
-vim.wo.foldmethod = 'expr'
-vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
--- vim.opt.foldmethod = 'expr'
--- vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-vim.opt.foldcolumn = '0'
+vim.o.foldmethod = 'expr'
+vim.o.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+vim.opt.foldcolumn = '1'
 vim.opt.foldtext = ''
 vim.opt.foldlevel = 99
 vim.opt.foldnestmax = 3
 
 -- for saving session
-vim.o.sessionoptions =
-   'blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions'
+vim.o.sessionoptions = 'tabpages,curdir,options'
 
 -- set winborder
 vim.o.winborder = 'rounded'
@@ -164,6 +165,17 @@ vim.diagnostic.config {
    severity_sort = true,
 }
 
+-- Autocommands
+vim.api.nvim_create_autocmd('LspAttach', {
+   callback = function(args) -- Prefer LSP folding if client supports it
+      local client = vim.lsp.get_client_by_id(args.data.client_id)
+      if client:supports_method 'textDocument/foldingRange' then
+         local win = vim.api.nvim_get_current_win()
+         vim.wo[win][0].foldexpr = 'v:lua.vim.lsp.foldexpr()'
+      end
+   end,
+})
+
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
@@ -205,23 +217,21 @@ require('lazy').setup {
 
 -- Disable some messages
 
-
 -- Disable the deprecated telescope 'goto definition'
 -- Silence the specific position encoding message
--- local notify_original = vim.notify
--- vim.notify = function(msg, ...)
---    if
---       msg
---       and (
---          msg:match 'position_encoding param is required'
---          or msg:match 'Defaulting to position encoding of the first client'
---          or msg:match 'multiple different client offset_encodings'
---       )
---    then
---       return
---    end
---    return notify_original(msg, ...)
--- end
-
+local notify_original = vim.notify
+vim.notify = function(msg, ...)
+   if
+      msg
+      and (
+         msg:match 'position_encoding param is required'
+         or msg:match 'Defaulting to position encoding of the first client'
+         or msg:match 'multiple different client offset_encodings'
+      )
+   then
+      return
+   end
+   return notify_original(msg, ...)
+end
 
 -- vim: ts=2 sts=2 sw=2 et

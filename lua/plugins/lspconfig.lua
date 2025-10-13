@@ -48,7 +48,7 @@ return {
       end
 
       for _, val in ipairs(tool_configs) do
-         if val.type == 'lsp' then
+         if val.type == 'lsp' and not vim.g.lsp_disabled then
             vim.lsp.enable(val.name)
          end
       end

@@ -9,6 +9,6 @@ return {
       suppressed_dirs = { '~/', '~/Projects', '~/Downloads', '/' },
       auto_create = false,
       auto_save = false,
-      auto_restore = true,
+      auto_restore = false,
    },
 }
