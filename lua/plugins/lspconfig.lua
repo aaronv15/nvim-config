@@ -7,7 +7,7 @@ return {
    },
    config = function()
       -- I wrote this. For future reference
-      ---@type {type: "'lsp'" | "'fmt'", name: string, mason_name: string?, config: table?}[]
+      ---@type {type: "'lsp'" | "'fmt'", name: string, mason_name: string?, config: vim.lsp.Config?}[]
       local tool_configs = {
          -- { type = 'lsp', name = 'ty' },
          {
@@ -43,7 +43,7 @@ return {
       --
       for _, val in ipairs(tool_configs) do
          if val.config then
-            vim.lsp.config(val.name, val)
+            vim.lsp.config(val.name, val.config)
          end
       end
 
