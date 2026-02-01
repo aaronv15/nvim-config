@@ -26,6 +26,7 @@ return {
          javascript = { 'prettierd' },
          markdown = { 'prettierd' },
          typescript = { 'prettierd' },
+         rust = { 'rustfmt' },
 
          -- Use the "*" filetype to run formatters on all filetypes.
          ['*'] = { 'codespell' },

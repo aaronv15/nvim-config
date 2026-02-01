@@ -7,10 +7,11 @@ return {
    },
    config = function()
       -- I wrote this. For future reference
-      ---@type {type: "'lsp'" | "'fmt'", name: string, mason_name: string?, config: vim.lsp.Config?}[]
+      ---@type { install: boolean, type: "'lsp'" | "'fmt'", name: string, mason_name: string?, config: vim.lsp.Config?}[]
       local tool_configs = {
          -- { type = 'lsp', name = 'ty' },
          {
+            install = true,
             type = 'lsp',
             name = 'basedpyright',
             config = {
@@ -19,22 +20,30 @@ return {
                },
             },
          },
-         { type = 'lsp', name = 'lua_ls', mason_name = 'lua-language-server' },
-         { type = 'lsp', name = 'gopls' },
-         { type = 'lsp', name = 'jdtls' },
-         { type = 'lsp', name = 'zls' },
-         { type = 'lsp', name = 'clangd' },
-         { type = 'fmt', name = 'stylua' },
-         { type = 'fmt', name = 'clang-format' },
-         { type = 'fmt', name = 'ruff' },
-         { type = 'fmt', name = 'golangci-lint' },
-         { type = 'fmt', name = 'codespell' },
-         { type = 'fmt', name = 'prettierd' },
+         {
+            install = true,
+            type = 'lsp',
+            name = 'lua_ls',
+            mason_name = 'lua-language-server',
+         },
+         { install = false, type = 'lsp', name = 'rust_analyzer' },
+         { install = true, type = 'lsp', name = 'gopls' },
+         { install = true, type = 'lsp', name = 'jdtls' },
+         { install = true, type = 'lsp', name = 'zls' },
+         { install = true, type = 'lsp', name = 'clangd' },
+         { install = true, type = 'fmt', name = 'stylua' },
+         { install = true, type = 'fmt', name = 'clang-format' },
+         { install = true, type = 'fmt', name = 'ruff' },
+         { install = true, type = 'fmt', name = 'golangci-lint' },
+         { install = true, type = 'fmt', name = 'codespell' },
+         { install = true, type = 'fmt', name = 'prettierd' },
       }
 
       local ensure_installed = {}
       for _, val in ipairs(tool_configs) do
-         table.insert(ensure_installed, val.mason_name or val.name)
+         if val.install then
+            table.insert(ensure_installed, val.mason_name or val.name)
+         end
       end
 
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
