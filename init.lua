@@ -93,6 +93,10 @@ vim.keymap.set('n', '<leader>0', '<cmd>tablast<CR>', { desc = 'Goto last tab' })
 
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
+vim.keymap.set('n', '<leader>i', function()
+   vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { 0 }, { 0 })
+end, { desc = 'Toggle LSP Inlay Hints' })
+
 -- Diagnostic keymaps
 vim.keymap.set(
    'n',
