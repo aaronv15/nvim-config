@@ -26,6 +26,7 @@ return {
             name = 'lua_ls',
             mason_name = 'lua-language-server',
          },
+         { install = false, type = 'lsp', name = 'hls' },
          { install = false, type = 'lsp', name = 'rust_analyzer' },
          { install = true, type = 'lsp', name = 'gopls' },
          { install = true, type = 'lsp', name = 'jdtls' },

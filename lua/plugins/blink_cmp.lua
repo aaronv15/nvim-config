@@ -31,6 +31,7 @@ return {
          ['<C-d>'] = { 'show_signature', 'hide_signature', 'fallback' },
          ['<C-k>'] = { 'scroll_documentation_up', 'fallback' },
          ['<C-j>'] = { 'scroll_documentation_down', 'fallback' },
+         ['<C- >'] = { 'show', 'hide' },
       },
 
       appearance = {
